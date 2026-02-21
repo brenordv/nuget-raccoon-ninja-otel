@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/00. Docs and Config/">
+    <File Path=".claude/settings.json" />
+    <File Path=".claude/skills/csharp/SKILL.md" />
+    <File Path=".claudeignore" />
+    <File Path=".editorconfig" />
+    <File Path="contributing.md" />
+    <File Path="license.md" />
+    <File Path="readme.md" />
+  </Folder>
+  <Folder Name="/01. Packages/" />
+  <Folder Name="/99. Tests/" />
+</Solution>

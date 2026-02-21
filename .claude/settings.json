@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/[Bb]in/**)",
+      "Edit(**/[Bb]in/**)",
+      "Read(**/[Bb]in)",
+      "Edit(**/[Bb]in)",
+      "Read(**/[Oo]bj/**)",
+      "Edit(**/[Oo]bj/**)",
+      "Read(**/[Oo]bj)",
+      "Edit(**/[Oo]bj)",
+      "Read(**/*.dll)",
+      "Edit(**/*.dll)",
+      "Read(**/settings.json)",
+      "Edit(**/settings.json)",
+      "Read(**/local.settings.json)",
+      "Edit(**/local.settings.json)",
+      "Read(**/appsettings*.json)",
+      "Edit(**/appsettings*.json)",
+      "Read(**/nuget*)",
+      "Edit(**/nuget*)",
+      "Read(**/.idea/**)",
+      "Edit(**/.idea/**)",
+      "Read(**/.vscode/**)",
+      "Edit(**/.vscode/**)",
+      "Read(**/.DS_Store)",
+      "Edit(**/.DS_Store)",
+      "Read(**/*.user)",
+      "Edit(**/*.user)",
+      "Read(.editorconfig)",
+      "Edit(.editorconfig)",
+      "Read(.gitignore)",
+      "Edit(.gitignore)",
+      "Read(.gitattributes)",
+      "Edit(.gitattributes)",
+      "Read(**/.git/**)",
+      "Edit(**/.git/**)",
+      "Read(**/.github/**)",
+      "Edit(**/.github/**)"
+    ],
+    "allow": [
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet format:*)"
+    ]
+  }
+}
