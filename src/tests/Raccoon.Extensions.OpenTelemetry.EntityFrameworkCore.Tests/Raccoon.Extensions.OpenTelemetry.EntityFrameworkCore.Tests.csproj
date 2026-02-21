@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore\Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+</Project>

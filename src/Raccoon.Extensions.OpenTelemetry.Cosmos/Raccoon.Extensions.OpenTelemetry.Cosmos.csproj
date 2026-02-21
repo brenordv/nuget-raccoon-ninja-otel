@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Description>Azure Cosmos DB tracing extension for Raccoon.Extensions.OpenTelemetry.</Description>
+    <PackageTags>opentelemetry;otel;tracing;cosmosdb;azure</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Raccoon.Extensions.OpenTelemetry\Raccoon.Extensions.OpenTelemetry.csproj" />
+  </ItemGroup>
+</Project>

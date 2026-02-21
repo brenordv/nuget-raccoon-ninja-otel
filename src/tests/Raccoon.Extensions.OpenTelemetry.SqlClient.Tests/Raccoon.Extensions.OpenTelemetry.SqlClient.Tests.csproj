@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry.SqlClient\Raccoon.Extensions.OpenTelemetry.SqlClient.csproj" />
+  </ItemGroup>
+</Project>

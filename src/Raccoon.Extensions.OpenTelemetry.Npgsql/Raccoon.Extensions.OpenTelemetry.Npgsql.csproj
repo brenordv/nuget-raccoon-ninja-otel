@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Description>PostgreSQL (Npgsql) tracing extension for Raccoon.Extensions.OpenTelemetry.</Description>
+    <PackageTags>opentelemetry;otel;tracing;npgsql;postgresql</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Raccoon.Extensions.OpenTelemetry\Raccoon.Extensions.OpenTelemetry.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.OpenTelemetry" Version="10.0.1" />
+  </ItemGroup>
+</Project>

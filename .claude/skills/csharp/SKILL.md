@@ -10,7 +10,16 @@ disable-model-invocation: false
 - Treat the repository as the source of truth; match existing patterns and structure.
 - Follow `.editorconfig` strictly, even when other guidance conflicts.
 - Minimize diffs; change only what is necessary.
-- Apply SOLID, DRY, and YAGNI; avoid speculative abstractions.
+- Apply SOLID:
+  - Single responsibility principle: keep classes small and focused. they should only do one thing, and do it well.
+  - Open/closed principle: classes should be open for extension, but closed for modification.
+  - Liskov substitution principle: derived classes must be substitutable for their base classes.
+  - Interface segregation principle: clients should not be forced to depend on methods they do not use.
+  - Dependency inversion principle: high-level modules should not depend on low-level modules; both should depend on abstractions.
+    - This also applies to properties: If a data type has an interface/abstraction, use the most appropriate one for the use case.
+- Apply DRY: Don't Repeat Yourself. Refactor when you see repeated code to improve maintainability, readability, and testability.
+- Always consider YAGNI: You Aren't Gonna Need It. Don't add code unless you need it. 
+- Avoid speculative abstractions.
 - Prefer design patterns already present in the repo; do not introduce new ones unless required.
 - Any new code should always follow the prime directives, be testable, and have well-thought-out unit tests.
 - Before start working on any task, you must:
@@ -23,6 +32,9 @@ disable-model-invocation: false
     5. Summarize the change to the user and report any problems, caveats, or warnings with the code change. In the summary, include the skills that were used to solve the request.
 - Avoid using reflection, since they drastically reduce code readability and create "magical" behavior in the code.
 - Code projects should live under `src/`, and test projects under `src/tests/`.
+- Imperative that nullable reference types are disabled in all projects.
+- Do not use `dynamic` type. If that's the absolute only option, stop, explain to the user what is going on, and your reasoning to think this is the only option, and ask the user for insights.
+- When dealing with nullable types, prefer safe guarding and asserting you have all you need instead of multiple null-coalescing checks during the execution of the method. Think of efficiency and easy to read/maintain the code after it is done.
 
 ## Formatting & Style (Golden Rule)
 - Obey `.editorconfig` without exceptions.
@@ -40,6 +52,12 @@ products.Where(p => p.IsActive)
         .ToList();
 ```
 - Only one public class/record/enum/struct, etc. per file.
+- Implement nullable only when necessary.
+- Whenever possible, prefer to use collection initialization instead of `new {}` statements.
+- Whenever instantiating an object, and right after setting values to its properties, use object initializer and do it all at once.
+- When creating a class that will only hold data, prefer to use a record instead of a class.
+- Properties inside class/record/struct should be readonly when possible, and preferably init instead of set. Immutability is a key factor in maintainability.
+- Classes holding extension methods should live inside an `Extensions` folder.
 
 ## Naming & Conventions
 - Async methods must end with `Async`.
@@ -159,12 +177,13 @@ follow the repositories pattern to propagate a meaningful error message that wil
 - The test names should be descriptive, action-oriented, concise, and follow the pattern: `{Method being tested}_{Action being performed}_{Expected result}`.
 - Test coverage should be kept at least 90%, save if the ROI is too low. In this case, consider refactoring the code to make it more testable. If nothing else is possible, add a comment explaining why the test coverage is not what is expected.
 - The name of test projects should be the same as the project they test, with the suffix `.Tests`.
-    - The same applies to test files, which should be named the same as the tested file, with the suffix `.Tests.cs`.
+    - The same applies to test files, which should be named the same as the tested file, with the suffix `Tests.cs`.
 
 ## NuGet packages
 - Use the latest stable version of each package.
 - Always use transient dependencies and avoid adding the same dependency on multiple projects, unless necessary. 
   - On that note, pay attention to the repercussions of moving a package to a more central project, if it doesn't make sense, leave a note on the csproj file explaining why.
+  - The only exception to this rule is the following packages: `coverlet.collector`, and `Microsoft.NET.Test.Sdk`. They need to be present on all test projects for the pipelines to work properly.
 
 ## Web API Conventions (When Applicable)
 - Controller actions return `IActionResult`.

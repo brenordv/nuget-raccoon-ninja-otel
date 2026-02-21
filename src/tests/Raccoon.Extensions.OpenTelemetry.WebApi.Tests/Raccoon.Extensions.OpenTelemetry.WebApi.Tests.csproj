@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry.WebApi\Raccoon.Extensions.OpenTelemetry.WebApi.csproj" />
+  </ItemGroup>
+</Project>

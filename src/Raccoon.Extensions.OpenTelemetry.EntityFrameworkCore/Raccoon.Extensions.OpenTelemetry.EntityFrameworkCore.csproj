@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Description>Entity Framework Core tracing extension for Raccoon.Extensions.OpenTelemetry.</Description>
+    <PackageTags>opentelemetry;otel;tracing;entityframeworkcore;efcore</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Raccoon.Extensions.OpenTelemetry\Raccoon.Extensions.OpenTelemetry.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.15.0-beta.1" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,31 @@
+<Solution>
+  <Folder Name="/00. Docs and Config/">
+    <File Path=".claude/settings.json" />
+    <File Path=".claude/skills/csharp/SKILL.md" />
+    <File Path=".claudeignore" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="contributing.md" />
+    <File Path="license.md" />
+    <File Path="readme.md" />
+  </Folder>
+  <Folder Name="/01. Packages/">
+    <Project Path="src/Raccoon.Extensions.OpenTelemetry.WebApi/Raccoon.Extensions.OpenTelemetry.WebApi.csproj" />
+    <Project Path="src/Raccoon.Extensions.OpenTelemetry/Raccoon.Extensions.OpenTelemetry.csproj" />
+    <Project Path="src/Raccoon.Extensions.OpenTelemetry.Npgsql/Raccoon.Extensions.OpenTelemetry.Npgsql.csproj" />
+    <Project Path="src/Raccoon.Extensions.OpenTelemetry.SqlClient/Raccoon.Extensions.OpenTelemetry.SqlClient.csproj" />
+    <Project Path="src/Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore/Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.csproj" />
+    <File Path="Directory.Build.props" />
+    <Project Path="src/Raccoon.Extensions.OpenTelemetry.Cosmos/Raccoon.Extensions.OpenTelemetry.Cosmos.csproj" />
+  </Folder>
+  <Folder Name="/02. Package Tests/">
+    <File Path="src/tests/Directory.Build.props" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.Cosmos.Tests/Raccoon.Extensions.OpenTelemetry.Cosmos.Tests.csproj" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.Tests/Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.Tests.csproj" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.Npgsql.Tests/Raccoon.Extensions.OpenTelemetry.Npgsql.Tests.csproj" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.SqlClient.Tests/Raccoon.Extensions.OpenTelemetry.SqlClient.Tests.csproj" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.Tests.Common/Raccoon.Extensions.OpenTelemetry.Tests.Common.csproj" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.Tests/Raccoon.Extensions.OpenTelemetry.Tests.csproj" />
+    <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.WebApi.Tests/Raccoon.Extensions.OpenTelemetry.WebApi.Tests.csproj" />
+  </Folder>
+</Solution>

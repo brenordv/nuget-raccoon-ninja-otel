@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry.Npgsql\Raccoon.Extensions.OpenTelemetry.Npgsql.csproj" />
+  </ItemGroup>
+</Project>
