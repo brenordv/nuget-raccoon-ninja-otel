@@ -1,7 +1,7 @@
 using Raccoon.Extensions.OpenTelemetry.Cosmos.Extensions;
 using Raccoon.Extensions.OpenTelemetry.Models;
 
-namespace Raccoon.Extensions.OpenTelemetry.Cosmos.Tests;
+namespace Raccoon.Extensions.OpenTelemetry.Cosmos.Tests.Extensions;
 
 public class CosmosOpenTelemetryExtensionsTests
 {

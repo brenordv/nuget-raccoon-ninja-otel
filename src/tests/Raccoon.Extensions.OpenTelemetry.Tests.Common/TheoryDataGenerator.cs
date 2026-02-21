@@ -9,9 +9,9 @@ public static class TheoryDataGenerator
     /// Provides empty and whitespace string values for testing input validation.
     /// </summary>
     /// <returns>A <see cref="TheoryData{T}"/> containing empty and whitespace strings.</returns>
-    public static TheoryData<string> EmptyOrWhitespaceStrings() => new()
-    {
-        { "" },
-        { "   " },
-    };
+    public static TheoryData<string> EmptyOrWhitespaceStrings() =>
+    [
+        "",
+        "   "
+    ];
 }
