@@ -5,7 +5,7 @@ using OpenTelemetry.Trace;
 using Raccoon.Extensions.OpenTelemetry.Extensions;
 using Raccoon.Extensions.OpenTelemetry.Tests.Common;
 
-namespace Raccoon.Extensions.OpenTelemetry.Tests;
+namespace Raccoon.Extensions.OpenTelemetry.Tests.Extensions;
 
 public class OpenTelemetryBuilderExtensionsTests
 {

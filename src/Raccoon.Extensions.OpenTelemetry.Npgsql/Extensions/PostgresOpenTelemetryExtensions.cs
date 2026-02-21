@@ -1,4 +1,5 @@
 using Npgsql;
+using Raccoon.Extensions.OpenTelemetry.Models;
 
 namespace Raccoon.Extensions.OpenTelemetry.Npgsql.Extensions;
 

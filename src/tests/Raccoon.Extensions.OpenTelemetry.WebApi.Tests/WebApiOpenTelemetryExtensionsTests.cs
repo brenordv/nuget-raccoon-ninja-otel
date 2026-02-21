@@ -1,3 +1,4 @@
+using Raccoon.Extensions.OpenTelemetry.Models;
 using Raccoon.Extensions.OpenTelemetry.WebApi.Extensions;
 
 namespace Raccoon.Extensions.OpenTelemetry.WebApi.Tests;

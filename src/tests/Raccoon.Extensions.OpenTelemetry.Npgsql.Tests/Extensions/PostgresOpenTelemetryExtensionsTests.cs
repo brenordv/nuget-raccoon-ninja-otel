@@ -1,6 +1,7 @@
+using Raccoon.Extensions.OpenTelemetry.Models;
 using Raccoon.Extensions.OpenTelemetry.Npgsql.Extensions;
 
-namespace Raccoon.Extensions.OpenTelemetry.Npgsql.Tests;
+namespace Raccoon.Extensions.OpenTelemetry.Npgsql.Tests.Extensions;
 
 public class PostgresOpenTelemetryExtensionsTests
 {

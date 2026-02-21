@@ -1,6 +1,7 @@
+using Raccoon.Extensions.OpenTelemetry.Models;
 using Raccoon.Extensions.OpenTelemetry.SqlClient.Extensions;
 
-namespace Raccoon.Extensions.OpenTelemetry.SqlClient.Tests;
+namespace Raccoon.Extensions.OpenTelemetry.SqlClient.Tests.Extensions;
 
 public class SqlClientOpenTelemetryExtensionsTests
 {

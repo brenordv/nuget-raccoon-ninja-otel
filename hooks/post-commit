@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# I know, I know. post-commit i meant for notification.
+# But this will NOTIFY me if I forgot to lint/format any files, and will save time,
+# because I won't have to wait for the pipeline to fail.
+
+LOG_PREFIX="[post-commit]"
+
+# log_info prints a concise, user-friendly status line.
+log_info() {
+  printf '%s %s\n' "$LOG_PREFIX" "$*"
+}
+
+# log_warn highlights non-fatal problems so the hook can continue gracefully.
+log_warn() {
+  printf '%s %s\n' "$LOG_PREFIX" "$*" >&2
+}
+
+# summarize_extensions reports how many files changed per extension.
+summarize_extensions() {
+  list_path="$1"
+  if [ ! -s "$list_path" ]; then
+    return
+  fi
+
+  while IFS= read -r file; do
+    [ -n "$file" ] || continue
+    base="${file##*/}"
+    ext="${base##*.}"
+    if [ "$ext" = "$base" ]; then
+      ext="no-extension"
+    fi
+    printf '%s\n' "$ext"
+  done <"$list_path" |
+    sort |
+    uniq -c |
+    while read -r count label; do
+      log_info "  - ${label}: ${count}"
+    done
+}
+
+# cleanup removes any temporary files created during execution.
+cleanup() {
+  rm -f "$changed_files_list" "$included_files_list" "$modified_list"
+}
+
+log_info "Starting post-commit dotnet format pass..."
+
+if ! git_root=$(git rev-parse --show-toplevel 2>/dev/null); then
+  log_warn "Not inside a Git repository. Skipping dotnet formatting."
+  exit 0
+fi
+
+cd "$git_root"
+
+if ! command -v dotnet >/dev/null 2>&1; then
+  log_warn "dotnet is not available on PATH. Cannot run dotnet format."
+  exit 0
+fi
+
+if ! dotnet format --help >/dev/null 2>&1; then
+  log_warn "dotnet format is not available. Ensure a modern .NET SDK is installed (dotnet format is built-in)."
+  exit 0
+fi
+
+changed_files_list=$(mktemp)
+included_files_list=$(mktemp)
+modified_list=$(mktemp)
+trap cleanup EXIT
+
+if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+  git diff --name-only HEAD^ HEAD >"$changed_files_list"
+else
+  git diff-tree --no-commit-id --name-only -r HEAD >"$changed_files_list"
+fi
+
+if [ ! -s "$changed_files_list" ]; then
+  log_info "The last commit did not modify any files. Nothing to format."
+  exit 0
+fi
+
+total_changed=$(wc -l <"$changed_files_list" | tr -d ' \t')
+log_info "Detected ${total_changed} changed file(s) in the last commit."
+log_info "Breakdown by extension:"
+summarize_extensions "$changed_files_list"
+
+# Only include .NET source files. This keeps the hook fast and avoids touching unrelated files.
+while IFS= read -r file; do
+  [ -n "$file" ] || continue
+
+  case "$file" in
+    *.cs | *.fs | *.vb)
+      if [ -f "$file" ]; then
+        printf '%s\n' "$file" >>"$included_files_list"
+      else
+        log_warn "Skipping $file (not a regular file)."
+      fi
+      ;;
+  esac
+done <"$changed_files_list"
+
+if [ ! -s "$included_files_list" ]; then
+  log_info "No .NET source files (.cs/.fs/.vb) were changed. Nothing to format."
+  exit 0
+fi
+
+included_count=$(wc -l <"$included_files_list" | tr -d ' \t')
+log_info "Running dotnet format on ${included_count} changed .NET source file(s)..."
+
+# Run once for all included files to keep the hook quick.
+# We silence output, but capture whether formatting succeeded.
+include_args=()
+while IFS= read -r file; do
+  [ -n "$file" ] || continue
+  include_args+=("$file")
+done <"$included_files_list"
+
+if ! dotnet format --verbosity minimal --include "${include_args[@]}" >/dev/null 2>&1; then
+  log_warn "dotnet format failed."
+  exit 0
+fi
+
+# Collect which of the included files ended up modified.
+git diff --name-only -- "${include_args[@]}" >"$modified_list" || true
+
+if [ -s "$modified_list" ]; then
+  modified_count=$(wc -l <"$modified_list" | tr -d ' \t')
+  log_info "dotnet format updated ${modified_count} file(s):"
+  while IFS= read -r file; do
+    log_info "  - $file"
+  done <"$modified_list"
+else
+  log_info "No files were changed by dotnet format."
+fi
+
+log_info "Post-commit formatting finished. Processed ${included_count} .NET source file(s) from the latest commit."
+

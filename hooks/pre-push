@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "🚀 Preparing to push! Running pre-push checks..."
+
+# Run formatting check
+echo "🔍 Checking code formatting..."
+if ! dotnet format --no-restore --verify-no-changes; then
+    echo "❌ Formatting check failed! Fix your code by running: 'dotnet format'"
+    exit 1
+fi
+echo "✅  Formatting looks good!"
+
+# Run tests
+echo "🧪 Running tests..."
+if ! dotnet test --no-restore --logger:"console;verbosity=normal"; then
+    echo "❌ Tests failed! Fix the issues before pushing."
+    exit 1
+fi
+echo "✅  All tests passed!"
+
+echo "🎉 All checks passed! Push away!"
+exit 0

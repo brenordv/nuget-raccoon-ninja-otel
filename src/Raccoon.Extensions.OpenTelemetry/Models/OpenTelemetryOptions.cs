@@ -1,7 +1,7 @@
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace Raccoon.Extensions.OpenTelemetry;
+namespace Raccoon.Extensions.OpenTelemetry.Models;
 
 /// <summary>
 /// Configuration options for the Raccoon OpenTelemetry setup.

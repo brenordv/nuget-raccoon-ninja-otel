@@ -1,6 +1,7 @@
 using Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.Extensions;
+using Raccoon.Extensions.OpenTelemetry.Models;
 
-namespace Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.Tests;
+namespace Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.Tests.Extensions;
 
 public class EfCoreOpenTelemetryExtensionsTests
 {

@@ -1,3 +1,5 @@
+using Raccoon.Extensions.OpenTelemetry.Models;
+
 namespace Raccoon.Extensions.OpenTelemetry.Cosmos.Extensions;
 
 /// <summary>

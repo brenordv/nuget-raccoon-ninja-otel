@@ -1,5 +1,6 @@
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Raccoon.Extensions.OpenTelemetry.Models;
 using Raccoon.Extensions.OpenTelemetry.WebApi.Models;
 
 namespace Raccoon.Extensions.OpenTelemetry.WebApi.Extensions;
