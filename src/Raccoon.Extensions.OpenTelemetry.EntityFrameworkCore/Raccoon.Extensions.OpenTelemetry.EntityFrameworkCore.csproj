@@ -3,6 +3,8 @@
     <IsPackable>true</IsPackable>
     <Description>Entity Framework Core tracing extension for Raccoon.Extensions.OpenTelemetry.</Description>
     <PackageTags>opentelemetry;otel;tracing;entityframeworkcore;efcore</PackageTags>
+    <!-- NU5104: OpenTelemetry.Instrumentation.EntityFrameworkCore only ships prerelease builds (1.15.0-beta.1). -->
+    <NoWarn>$(NoWarn);NU5104</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
