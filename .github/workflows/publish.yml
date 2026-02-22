@@ -31,13 +31,13 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --configuration Release
-  
+
   publish:
     name: Publish
     needs: validate
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,6 +58,12 @@ jobs:
         env:
           PKG_VERSION: ${{ steps.version.outputs.VERSION }}
         run: dotnet pack --configuration Release --no-restore /p:Version=$PKG_VERSION --output ./nupkgs
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: gh release create "$TAG_NAME" ./nupkgs/*.nupkg --generate-notes --clobber-assets
 
       - name: Push to NuGet.org
         env:

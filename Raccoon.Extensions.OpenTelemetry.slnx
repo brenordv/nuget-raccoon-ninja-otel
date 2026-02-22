@@ -1,17 +1,24 @@
 <Solution>
   <Folder Name="/00. Docs and Config/">
-    <File Path=".claude/settings.json" />
-    <File Path=".claude/skills/csharp/SKILL.md" />
-    <File Path=".claudeignore" />
-    <File Path=".editorconfig" />
-    <File Path=".github/workflows/ci.yml" />
-    <File Path=".github/workflows/keepalive.yml" />
-    <File Path=".github/workflows/publish.yml" />
-    <File Path=".gitignore" />
+    <File Path="changelog.md" />
     <File Path="contributing.md" />
     <File Path="license.md" />
     <File Path="readme-demo.md" />
     <File Path="readme.md" />
+  </Folder>
+  <Folder Name="/00. Docs and Config/Ai/">
+    <File Path=".claude/settings.json" />
+    <File Path=".claude/skills/csharp/SKILL.md" />
+    <File Path=".claudeignore" />
+  </Folder>
+  <Folder Name="/00. Docs and Config/Pipelines/">
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/keepalive.yml" />
+    <File Path=".github/workflows/publish.yml" />
+  </Folder>
+  <Folder Name="/00. Docs and Config/Repo Config/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
   </Folder>
   <Folder Name="/01. Packages/">
     <Project Path="src/Raccoon.Extensions.OpenTelemetry.WebApi/Raccoon.Extensions.OpenTelemetry.WebApi.csproj" />
