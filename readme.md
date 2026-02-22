@@ -2,6 +2,20 @@
 
 Drop-in OpenTelemetry setup for any .NET application. Configures tracing, metrics, and logging with a single line of code.
 
+---
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=bugs)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=coverage)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
+---
+
 ## Quick Start
 
 Install the core package:
