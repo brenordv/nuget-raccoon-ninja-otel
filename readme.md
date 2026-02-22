@@ -16,6 +16,40 @@ Drop-in OpenTelemetry setup for any .NET application. Configures tracing, metric
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=brenordv_nuget-raccoon-ninja-otel&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=brenordv_nuget-raccoon-ninja-otel)
 ---
 
+## What to use?
+- Regular CLI applications -> Raccoon.Extensions.OpenTelemetry
+- ASP.NET Core applications -> Raccoon.Extensions.OpenTelemetry.WebApi
+- Using Sql Server without EFCore -> Raccoon.Extensions.OpenTelemetry.SqlClient
+- Using PostgreSQL without EFCore -> Raccoon.Extensions.OpenTelemetry.Npgsql
+- Using Entity Framework Core -> Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore
+- Using Cosmos DB -> Raccoon.Extensions.OpenTelemetry.Cosmos
+
+You can mix and match any of the above packages, and you can install just what you need, no need to install `Raccoon.Extensions.OpenTelemetry` + `other package`. 
+
+## Experimental Dependencies
+Before you start using all of these packages, it is important to point out that two extension packages rely on upstream
+features that are **not yet stable**. Both are outside our control.
+
+### Entity Framework Core
+
+The `Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore` package depends on
+[`OpenTelemetry.Instrumentation.EntityFrameworkCore`](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.EntityFrameworkCore),
+which is published **only as a prerelease** (`1.15.0-beta.1`) by the OpenTelemetry .NET project.
+The upstream maintainers have not shipped a stable release yet, so breaking changes between beta versions are possible.
+
+### Cosmos DB
+
+The `Raccoon.Extensions.OpenTelemetry.Cosmos` package enables distributed tracing via the
+`Azure.Experimental.EnableActivitySource` feature switch in the Azure SDK. Microsoft marks this as
+**experimental** — the API surface, activity source names, or opt-in mechanism may change in future
+Azure SDK releases.
+
+Additionally, consumers must manually set `CosmosClientOptions.CosmosClientTelemetryOptions.DisableDistributedTracing = false`
+on their `CosmosClient` for traces to be emitted.
+
+> All other packages in this family depend exclusively on stable releases. We will update these extensions
+> as soon as stable versions are available upstream.
+
 ## Quick Start
 
 Install the core package:
