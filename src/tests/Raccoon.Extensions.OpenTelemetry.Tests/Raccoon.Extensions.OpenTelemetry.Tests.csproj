@@ -1,9 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry\Raccoon.Extensions.OpenTelemetry.csproj" />
     <ProjectReference Include="..\Raccoon.Extensions.OpenTelemetry.Tests.Common\Raccoon.Extensions.OpenTelemetry.Tests.Common.csproj" />
   </ItemGroup>

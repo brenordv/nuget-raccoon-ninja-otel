@@ -91,6 +91,40 @@ var host = builder.Build();
 host.Run();
 ```
 
+### Reading the Endpoint from Configuration
+
+Instead of hardcoding the OTLP endpoint, you can store it in `appsettings.json` and use the built-in `GetOpenTelemetryEndpoint` helper:
+
+```json
+{
+  "OpenTelemetry": {
+    "OtlpEndpoint": "http://localhost:4317"
+  }
+}
+```
+
+```csharp
+var otlpEndpoint = builder.Configuration.GetOpenTelemetryEndpoint();
+
+builder.AddOpenTelemetry("my-api", o =>
+{
+    o.OtlpEndpoint = otlpEndpoint;
+    o.WithWebApi();
+});
+```
+
+The method reads from the `OpenTelemetry:OtlpEndpoint` configuration key by default. You can customize the section and key names:
+
+```csharp
+var otlpEndpoint = builder.Configuration.GetOpenTelemetryEndpoint(
+    sectionName: "Observability",
+    keyName: "CollectorUrl");
+```
+
+If the configuration value is missing or invalid, the method throws immediately at startup, following a fail-fast approach.
+
+### Falling Back to Environment Variables
+
 If `OtlpEndpoint` is not set, the exporter falls back to the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable:
 
 ```

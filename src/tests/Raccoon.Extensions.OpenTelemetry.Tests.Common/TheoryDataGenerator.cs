@@ -14,4 +14,16 @@ public static class TheoryDataGenerator
         "",
         "   "
     ];
+
+    /// <summary>
+    /// Provides strings that are not valid URIs for testing URI parsing validation.
+    /// </summary>
+    /// <returns>A <see cref="TheoryData{T}"/> containing invalid URI strings.</returns>
+    public static TheoryData<string> InvalidUriStrings() =>
+    [
+        "not-a-uri",
+        "://missing-scheme",
+        "http://",
+        "just some text"
+    ];
 }
