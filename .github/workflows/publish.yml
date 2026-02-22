@@ -59,11 +59,24 @@ jobs:
           PKG_VERSION: ${{ steps.version.outputs.VERSION }}
         run: dotnet pack --configuration Release --no-restore /p:Version=$PKG_VERSION --output ./nupkgs
 
-      - name: Create GitHub Release
+      - name: Create or reuse GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ github.ref_name }}
-        run: gh release create "$TAG_NAME" ./nupkgs/*.nupkg --generate-notes --clobber-assets
+        run: |
+          set -euo pipefail
+          # Check if a release already exists for this tag.
+          if gh release view "$TAG_NAME" > /dev/null 2>&1; then
+            echo "Release already exists for $TAG_NAME"
+          else
+            gh release create "$TAG_NAME" --generate-notes
+          fi
+
+      - name: Upload assets to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: gh release upload "$TAG_NAME" ./nupkgs/*.nupkg --clobber-assets
 
       - name: Push to NuGet.org
         env:
