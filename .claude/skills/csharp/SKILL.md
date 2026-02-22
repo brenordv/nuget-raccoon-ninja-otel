@@ -178,6 +178,8 @@ follow the repositories pattern to propagate a meaningful error message that wil
 - Test coverage should be kept at least 90%, save if the ROI is too low. In this case, consider refactoring the code to make it more testable. If nothing else is possible, add a comment explaining why the test coverage is not what is expected.
 - The name of test projects should be the same as the project they test, with the suffix `.Tests`.
     - The same applies to test files, which should be named the same as the tested file, with the suffix `Tests.cs`.
+- When using a hardcoded test value more than once, create a constant with a meaningful name instead of repeating it multiple times.
+  - If the same value is used in multiple tests, create a `const` field in the test class, and reference it from the tests. Otherwise, create a `const` field in the tested class.
 
 ## NuGet packages
 - Use the latest stable version of each package.
