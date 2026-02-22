@@ -5,6 +5,7 @@
     <File Path=".claudeignore" />
     <File Path=".editorconfig" />
     <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/keepalive.yml" />
     <File Path=".gitignore" />
     <File Path="contributing.md" />
     <File Path="license.md" />
