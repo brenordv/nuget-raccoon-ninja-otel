@@ -31,5 +31,6 @@
   </Folder>
   <Folder Name="/03. Demo Applications/">
     <Project Path="src_demo/Raccoon.Extensions.OpenTelemetry.DemoApi/Raccoon.Extensions.OpenTelemetry.DemoApi.csproj" />
+    <Project Path="src_demo/Raccoon.Extensions.OpenTelemetry.DemoConsumerApi/Raccoon.Extensions.OpenTelemetry.DemoConsumerApi.csproj" />
   </Folder>
 </Solution>
