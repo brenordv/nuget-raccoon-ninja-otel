@@ -20,7 +20,11 @@ dotnet add package Raccoon.Extensions.OpenTelemetry.WebApi
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
-builder.AddRaccoonOtel("my-api", o => o.WithWebApi());
+builder.AddOpenTelemetry("my-api", o =>
+{
+    o.OtlpEndpoint = new Uri("http://localhost:4318");
+    o.WithWebApi();
+});
 var app = builder.Build();
 app.Run();
 ```
@@ -31,12 +35,15 @@ For non-web apps, no extra packages are needed:
 
 ```csharp
 var builder = Host.CreateApplicationBuilder(args);
-builder.AddRaccoonOtel("my-cli");
+builder.AddOpenTelemetry("my-cli", o =>
+{
+    o.OtlpEndpoint = new Uri("http://localhost:4318");
+});
 var host = builder.Build();
 host.Run();
 ```
 
-Set the OTLP endpoint via environment variable:
+If `OtlpEndpoint` is not set, the exporter falls back to the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable:
 
 ```
 OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
@@ -46,12 +53,12 @@ That's it. All `ILogger<T>` calls, HttpClient spans, and runtime metrics are now
 
 ## What It Does
 
-`AddRaccoonOtel()` configures the full OpenTelemetry pipeline:
+`AddOpenTelemetry()` configures the full OpenTelemetry pipeline:
 
 - **Logging** - Hooks into `ILogger<T>` via `AddOpenTelemetry()` with formatted messages and scopes
 - **Tracing** - HttpClient outgoing spans and custom `ActivitySource` spans
 - **Metrics** - HttpClient metrics and .NET runtime metrics (GC, thread pool)
-- **Export** - OTLP exporter for all three signals, configured via `OTEL_EXPORTER_OTLP_ENDPOINT`
+- **Export** - OTLP exporter for all three signals, using the endpoint and protocol from `OpenTelemetryOptions`
 
 With `WithWebApi()`, ASP.NET Core server spans and request metrics are added. Health check endpoints (`/health`, `/alive`) are excluded from tracing by default.
 
@@ -77,8 +84,10 @@ dotnet add package Raccoon.Extensions.OpenTelemetry.Npgsql
 ```
 
 ```csharp
-builder.AddRaccoonOtel("my-pg-api", o =>
+builder.AddOpenTelemetry("my-pg-api", o =>
 {
+    o.OtlpEndpoint = new Uri("http://localhost:4317");
+    o.OtlpProtocol = OtlpExportProtocol.Grpc;
     o.WithWebApi();
     o.WithNpgsql();
 });
@@ -94,8 +103,9 @@ dotnet add package Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore
 ```
 
 ```csharp
-builder.AddRaccoonOtel("my-sql-api", o =>
+builder.AddOpenTelemetry("my-sql-api", o =>
 {
+    o.OtlpEndpoint = new Uri("http://localhost:4318");
     o.WithWebApi();
     o.WithSqlClient();
     o.WithEntityFrameworkCore();
@@ -111,8 +121,9 @@ dotnet add package Raccoon.Extensions.OpenTelemetry.Cosmos
 ```
 
 ```csharp
-builder.AddRaccoonOtel("my-cosmos-api", o =>
+builder.AddOpenTelemetry("my-cosmos-api", o =>
 {
+    o.OtlpEndpoint = new Uri("http://localhost:4318");
     o.WithWebApi();
     o.WithCosmos();
 });
@@ -128,14 +139,19 @@ dotnet add package Raccoon.Extensions.OpenTelemetry.Npgsql
 ```
 
 ```csharp
-builder.AddRaccoonOtel("my-cli", o => o.WithNpgsql());
+builder.AddOpenTelemetry("my-cli", o =>
+{
+    o.OtlpEndpoint = new Uri("http://localhost:4318");
+    o.WithNpgsql();
+});
 ```
 
 ### With Customization
 
 ```csharp
-builder.AddRaccoonOtel("my-api", o =>
+builder.AddOpenTelemetry("my-api", o =>
 {
+    o.OtlpEndpoint = new Uri("http://localhost:4318");
     o.WithWebApi(webApi => webApi.ExcludedPaths.Add("/swagger"));
     o.WithNpgsql();
     o.ResourceAttributes["deployment.environment"] = "production";
@@ -161,16 +177,20 @@ public async Task ProcessOrderAsync(int orderId)
 
 ## Configuration Options
 
-### Core (`RaccoonOtelOptions`)
+### Core (`OpenTelemetryOptions`)
 
-| Option               | Default | Description                              |
-|----------------------|---------|------------------------------------------|
-| `AdditionalSources`  | `[]`    | Extra `ActivitySource` names to capture  |
-| `ResourceAttributes` | `{}`    | Extra OTel resource attributes           |
-| `ConfigureTracing`   | `null`  | Escape hatch for advanced tracing config |
-| `ConfigureMetrics`   | `null`  | Escape hatch for advanced metrics config |
+| Option                | Default        | Description                                                                            |
+|-----------------------|----------------|----------------------------------------------------------------------------------------|
+| `OtlpEndpoint`        | `null`         | OTLP collector endpoint; falls back to `OTEL_EXPORTER_OTLP_ENDPOINT` env var when null |
+| `OtlpProtocol`        | `HttpProtobuf` | OTLP export protocol (`HttpProtobuf` for port 4318, `Grpc` for port 4317)              |
+| `AdditionalSources`   | `[]`           | Extra `ActivitySource` names to capture                                                |
+| `ResourceAttributes`  | `{}`           | Extra OTel resource attributes                                                         |
+| `ConfigureTracing`    | `null`         | Escape hatch for advanced tracing config                                               |
+| `ConfigureMetrics`    | `null`         | Escape hatch for advanced metrics config                                               |
+| `TracingContributors` | `[]`           | Tracing contributors registered by extension packages via `WithXxx()` methods          |
+| `MetricsContributors` | `[]`           | Metrics contributors registered by extension packages via `WithXxx()` methods          |
 
-### WebApi (`WebApiOtelOptions`)
+### WebApi (`WebApiOpenTelemetryOptions`)
 
 | Option          | Default                 | Description                         |
 |-----------------|-------------------------|-------------------------------------|
@@ -179,12 +199,12 @@ public async Task ProcessOrderAsync(int orderId)
 ## Requirements
 
 - .NET 10
-- An OTLP-compatible collector (Grafana Alloy, OpenTelemetry Collector, etc.)
+- An OTLP-compatible collector (Jaeger, Aspire Dashboard, Grafana Alloy, OpenTelemetry Collector, etc.)
 
 ## Important Notes
 
 - `UseOtlpExporter()` is used for all signals. This **cannot coexist** with per-signal `AddOtlpExporter()` calls. This package owns the full OTel pipeline - don't mix with manual OTel configuration.
-- The OTLP endpoint is configured exclusively via the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable.
+- The OTLP endpoint can be set via `OpenTelemetryOptions.OtlpEndpoint` or the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable. When both are set, `OtlpEndpoint` takes precedence.
 - All existing `ILogger<T>` calls automatically get exported - no code changes needed in your services.
 
 ## License
