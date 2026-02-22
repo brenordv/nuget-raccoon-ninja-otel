@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Raccoon.Extensions.OpenTelemetry\Raccoon.Extensions.OpenTelemetry.csproj" />
+    <ProjectReference Include="..\..\src\Raccoon.Extensions.OpenTelemetry.WebApi\Raccoon.Extensions.OpenTelemetry.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Raccoon.Extensions.OpenTelemetry.Npgsql\Raccoon.Extensions.OpenTelemetry.Npgsql.csproj" />
+    <ProjectReference Include="..\..\src\Raccoon.Extensions.OpenTelemetry.SqlClient\Raccoon.Extensions.OpenTelemetry.SqlClient.csproj" />
+    <ProjectReference Include="..\..\src\Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore\Raccoon.Extensions.OpenTelemetry.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\Raccoon.Extensions.OpenTelemetry.Cosmos\Raccoon.Extensions.OpenTelemetry.Cosmos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.57.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="1.2.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+  </ItemGroup>
+</Project>

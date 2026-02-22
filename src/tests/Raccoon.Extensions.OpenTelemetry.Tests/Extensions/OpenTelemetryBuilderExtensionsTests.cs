@@ -201,4 +201,24 @@ public class OpenTelemetryBuilderExtensionsTests
         // Assert
         Assert.Null(exception);
     }
+
+    [Fact]
+    public void AddOpenTelemetry_WithOtlpEndpoint_RegistersOpenTelemetryServices()
+    {
+        // Arrange
+        var builder = Host.CreateApplicationBuilder();
+
+        // Act
+        builder.AddOpenTelemetry("test-service", options =>
+        {
+            options.OtlpEndpoint = new Uri("http://localhost:4317");
+        });
+
+        // Assert
+        var serviceProvider = builder.Services.BuildServiceProvider();
+        var tracerProvider = serviceProvider.GetService<TracerProvider>();
+        var meterProvider = serviceProvider.GetService<MeterProvider>();
+        Assert.NotNull(tracerProvider);
+        Assert.NotNull(meterProvider);
+    }
 }

@@ -7,6 +7,7 @@
     <File Path=".gitignore" />
     <File Path="contributing.md" />
     <File Path="license.md" />
+    <File Path="readme-demo.md" />
     <File Path="readme.md" />
   </Folder>
   <Folder Name="/01. Packages/">
@@ -27,5 +28,8 @@
     <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.Tests.Common/Raccoon.Extensions.OpenTelemetry.Tests.Common.csproj" />
     <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.Tests/Raccoon.Extensions.OpenTelemetry.Tests.csproj" />
     <Project Path="src/tests/Raccoon.Extensions.OpenTelemetry.WebApi.Tests/Raccoon.Extensions.OpenTelemetry.WebApi.Tests.csproj" />
+  </Folder>
+  <Folder Name="/03. Demo Applications/">
+    <Project Path="src_demo/Raccoon.Extensions.OpenTelemetry.DemoApi/Raccoon.Extensions.OpenTelemetry.DemoApi.csproj" />
   </Folder>
 </Solution>

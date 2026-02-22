@@ -1,3 +1,4 @@
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -8,6 +9,24 @@ namespace Raccoon.Extensions.OpenTelemetry.Models;
 /// </summary>
 public sealed record OpenTelemetryOptions
 {
+    /// <summary>
+    /// The OTLP collector endpoint to export telemetry to (e.g., <c>http://localhost:4318</c>).
+    /// </summary>
+    /// <remarks>
+    /// When set, the exporter uses this endpoint with the protocol specified in <see cref="OtlpProtocol"/>.
+    /// When <c>null</c> (default), the exporter falls back to the <c>OTEL_EXPORTER_OTLP_ENDPOINT</c> environment variable.
+    /// </remarks>
+    public Uri OtlpEndpoint { get; set; }
+
+    /// <summary>
+    /// The OTLP export protocol to use when <see cref="OtlpEndpoint"/> is set.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <see cref="OtlpExportProtocol.HttpProtobuf"/> (port 4318).
+    /// Set to <see cref="OtlpExportProtocol.Grpc"/> if your collector listens on gRPC (port 4317).
+    /// </remarks>
+    public OtlpExportProtocol OtlpProtocol { get; set; } = OtlpExportProtocol.HttpProtobuf;
+
     /// <summary>
     /// Additional <see cref="System.Diagnostics.ActivitySource"/> names to capture beyond the service name.
     /// </summary>

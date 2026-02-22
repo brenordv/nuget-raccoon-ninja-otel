@@ -1,3 +1,4 @@
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using Raccoon.Extensions.OpenTelemetry.Models;
@@ -122,5 +123,48 @@ public class OpenTelemetryOptionsTests
         // Assert
         Assert.Single(options.AdditionalSources);
         Assert.Equal("MyCustomSource", options.AdditionalSources[0]);
+    }
+
+    [Fact]
+    public void Constructor_WhenCreated_SetsNullOtlpEndpoint()
+    {
+        // Arrange & Act
+        var options = new OpenTelemetryOptions();
+
+        // Assert
+        Assert.Null(options.OtlpEndpoint);
+    }
+
+    [Fact]
+    public void OtlpEndpoint_WhenSet_ReturnsConfiguredUri()
+    {
+        // Arrange
+        var endpoint = new Uri("http://localhost:4318");
+
+        // Act
+        var options = new OpenTelemetryOptions { OtlpEndpoint = endpoint };
+
+        // Assert
+        Assert.Same(endpoint, options.OtlpEndpoint);
+    }
+
+    [Fact]
+    public void Constructor_WhenCreated_SetsHttpProtobufAsDefaultOtlpProtocol()
+    {
+        // Arrange & Act
+        var options = new OpenTelemetryOptions();
+
+        // Assert
+        Assert.Equal(OtlpExportProtocol.HttpProtobuf, options.OtlpProtocol);
+    }
+
+    [Fact]
+    public void OtlpProtocol_WhenSetToGrpc_ReturnsGrpc()
+    {
+        // Arrange & Act
+        var options = new OpenTelemetryOptions { OtlpProtocol = OtlpExportProtocol.Grpc };
+
+        // Assert
+        Assert.Equal(OtlpExportProtocol.Grpc, options.OtlpProtocol);
     }
 }

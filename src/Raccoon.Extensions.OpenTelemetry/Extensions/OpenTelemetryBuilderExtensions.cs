@@ -29,9 +29,9 @@ public static class OpenTelemetryBuilderExtensions
     /// <exception cref="ArgumentException">Thrown when <paramref name="serviceName"/> is null or whitespace.</exception>
     /// <remarks>
     /// <para>
-    /// This method configures the OTLP exporter via <c>UseOtlpExporter()</c>, which reads the
-    /// <c>OTEL_EXPORTER_OTLP_ENDPOINT</c> environment variable. It cannot coexist with per-signal
-    /// <c>AddOtlpExporter()</c> calls — this package owns the full OTel pipeline.
+    /// When <see cref="OpenTelemetryOptions.OtlpEndpoint"/> is set, the OTLP exporter uses that endpoint
+    /// with the protocol specified in <see cref="OpenTelemetryOptions.OtlpProtocol"/>. Otherwise, it falls back to the <c>OTEL_EXPORTER_OTLP_ENDPOINT</c> environment variable.
+    /// The exporter cannot coexist with per-signal <c>AddOtlpExporter()</c> calls — this package owns the full OTel pipeline.
     /// </para>
     /// <para>
     /// The core package is host-agnostic. For ASP.NET Core instrumentation, add the
@@ -55,7 +55,7 @@ public static class OpenTelemetryBuilderExtensions
             logging.IncludeScopes = true;
         });
 
-        builder.Services.AddOpenTelemetry()
+        var otelBuilder = builder.Services.AddOpenTelemetry()
             .ConfigureResource(resource =>
             {
                 resource.AddService(serviceName);
@@ -95,8 +95,16 @@ public static class OpenTelemetryBuilderExtensions
                 }
 
                 options.ConfigureMetrics?.Invoke(metrics);
-            })
-            .UseOtlpExporter();
+            });
+
+        if (options.OtlpEndpoint is not null)
+        {
+            otelBuilder.UseOtlpExporter(options.OtlpProtocol, options.OtlpEndpoint);
+        }
+        else
+        {
+            otelBuilder.UseOtlpExporter();
+        }
 
         return builder;
     }
