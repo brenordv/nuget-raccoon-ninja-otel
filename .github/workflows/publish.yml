@@ -76,7 +76,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ github.ref_name }}
-        run: gh release upload "$TAG_NAME" ./nupkgs/*.nupkg --clobber-assets
+        run: gh release upload "$TAG_NAME" ./nupkgs/*.nupkg --clobber
 
       - name: Push to NuGet.org
         env:
