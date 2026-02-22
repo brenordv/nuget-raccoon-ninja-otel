@@ -6,7 +6,9 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 var otlpEndpoint = builder.Configuration["OpenTelemetry:OtlpEndpoint"];
+#pragma warning disable S3236 // Caller information arguments should not be provided explicitly -- config key is more meaningful than variable name
 ArgumentException.ThrowIfNullOrWhiteSpace(otlpEndpoint, "OpenTelemetry:OtlpEndpoint");
+#pragma warning restore S3236
 
 builder.AddOpenTelemetry("demo-consumer-api", o =>
 {
@@ -27,4 +29,4 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-app.Run();
+await app.RunAsync();

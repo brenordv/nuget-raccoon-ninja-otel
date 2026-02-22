@@ -1,9 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace Raccoon.Extensions.OpenTelemetry.DemoConsumerApi.Models;
 
 public record WatchedMovieResponse(
     string LetterboxdUri,
-    DateOnly WatchDate,
+    [property: JsonRequired] DateOnly WatchDate,
     string Title,
-    short ReleaseYear,
+    [property: JsonRequired] short ReleaseYear,
     Guid? CacheId,
     string Genres);

@@ -10,7 +10,9 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         var baseUrl = configuration["DemoApi:BaseUrl"];
+#pragma warning disable S3236 // Caller information arguments should not be provided explicitly -- config key is more meaningful than variable name
         ArgumentException.ThrowIfNullOrWhiteSpace(baseUrl, "DemoApi:BaseUrl");
+#pragma warning restore S3236
 
         services
             .AddRefitClient<IDemoApiClient>()

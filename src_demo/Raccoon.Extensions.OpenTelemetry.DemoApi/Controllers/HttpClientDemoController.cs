@@ -8,7 +8,9 @@ public class HttpClientDemoController(
     IHttpClientFactory httpClientFactory,
     ILogger<HttpClientDemoController> logger) : ControllerBase
 {
+#pragma warning disable S1075 // URIs should not be hardcoded -- demo application with intentional hardcoded target
     private const string TargetUrl = "https://httpbin.org/get";
+#pragma warning restore S1075
 
     [HttpGet]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)

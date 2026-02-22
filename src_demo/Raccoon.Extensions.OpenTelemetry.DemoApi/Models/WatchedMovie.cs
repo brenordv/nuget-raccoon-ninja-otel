@@ -12,7 +12,7 @@ public class WatchedMovie
 
     [Required]
     [Column("watch_date")]
-    public DateOnly WatchDate { get; set; }
+    public required DateOnly WatchDate { get; set; }
 
     [Required]
     [Column("title")]
@@ -21,7 +21,7 @@ public class WatchedMovie
     [Required]
     [Column("release_year")]
     [Range(1878, 2100)]
-    public short ReleaseYear { get; set; }
+    public required short ReleaseYear { get; set; }
 
     [Column("cache_id")]
     public Guid? CacheId { get; set; }
