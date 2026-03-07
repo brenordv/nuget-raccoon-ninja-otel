@@ -39,7 +39,14 @@ internal sealed class NpgsqlPeerServiceProcessor : BaseProcessor<Activity>
             return;
         }
 
-        data.SetTag(PeerServiceKey, PeerServiceValue);
-        data.SetTag(DbSystemKey, DbSystemValue);
+        if (data.GetTagItem(PeerServiceKey) is null)
+        {
+            data.SetTag(PeerServiceKey, PeerServiceValue);
+        }
+
+        if (data.GetTagItem(DbSystemKey) is null)
+        {
+            data.SetTag(DbSystemKey, DbSystemValue);
+        }
     }
 }

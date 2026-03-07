@@ -13,6 +13,7 @@ public class PostgresOpenTelemetryExtensionsTests : IDisposable
     private const string PeerServiceKey = "peer.service";
     private const string DbSystemKey = "db.system";
     private const string ExpectedPeerServiceValue = "postgresql";
+    private const string ExpectedDbSystemValue = "postgresql";
 
     private readonly ActivitySource _npgsqlSource = new(NpgsqlSourceName);
     private readonly ActivitySource _otherSource = new(NonNpgsqlSourceName);
@@ -103,7 +104,7 @@ public class PostgresOpenTelemetryExtensionsTests : IDisposable
 
         // Assert
         var exported = Assert.Single(exportedActivities);
-        Assert.Equal(ExpectedPeerServiceValue, exported.GetTagItem(DbSystemKey));
+        Assert.Equal(ExpectedDbSystemValue, exported.GetTagItem(DbSystemKey));
     }
 
     [Fact]
@@ -143,6 +144,44 @@ public class PostgresOpenTelemetryExtensionsTests : IDisposable
         Assert.Equal("postgresql", exported.GetTagItem("db.system.name"));
         Assert.Equal("rverse.local", exported.GetTagItem("server.address"));
         Assert.Equal(ExpectedPeerServiceValue, exported.GetTagItem(PeerServiceKey));
+    }
+
+    [Fact]
+    public void WithNpgsql_WhenPeerServiceAlreadySet_DoesNotOverwrite()
+    {
+        // Arrange
+        var exportedActivities = new List<Activity>();
+        using var tracerProvider = BuildTracerProvider(exportedActivities);
+        const string customPeerService = "postgresql-primary";
+
+        // Act
+        using (var activity = _npgsqlSource.StartActivity("SELECT version()", ActivityKind.Client))
+        {
+            activity?.SetTag(PeerServiceKey, customPeerService);
+        }
+
+        // Assert
+        var exported = Assert.Single(exportedActivities);
+        Assert.Equal(customPeerService, exported.GetTagItem(PeerServiceKey));
+    }
+
+    [Fact]
+    public void WithNpgsql_WhenDbSystemAlreadySet_DoesNotOverwrite()
+    {
+        // Arrange
+        var exportedActivities = new List<Activity>();
+        using var tracerProvider = BuildTracerProvider(exportedActivities);
+        const string customDbSystem = "cockroachdb";
+
+        // Act
+        using (var activity = _npgsqlSource.StartActivity("SELECT version()", ActivityKind.Client))
+        {
+            activity?.SetTag(DbSystemKey, customDbSystem);
+        }
+
+        // Assert
+        var exported = Assert.Single(exportedActivities);
+        Assert.Equal(customDbSystem, exported.GetTagItem(DbSystemKey));
     }
 
     public void Dispose()
