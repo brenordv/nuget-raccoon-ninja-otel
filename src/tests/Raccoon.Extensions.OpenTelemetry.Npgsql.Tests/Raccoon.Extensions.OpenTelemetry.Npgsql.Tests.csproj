@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry.Npgsql\Raccoon.Extensions.OpenTelemetry.Npgsql.csproj" />
+    <ProjectReference Include="..\Raccoon.Extensions.OpenTelemetry.Tests.Common\Raccoon.Extensions.OpenTelemetry.Tests.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+      <PackageReference Include="OpenTelemetry.Exporter.InMemory" Version="1.15.0" />
   </ItemGroup>
 </Project>
