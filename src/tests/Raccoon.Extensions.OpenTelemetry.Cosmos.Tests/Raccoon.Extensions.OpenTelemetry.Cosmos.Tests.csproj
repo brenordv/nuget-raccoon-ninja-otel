@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\Raccoon.Extensions.OpenTelemetry.Cosmos\Raccoon.Extensions.OpenTelemetry.Cosmos.csproj" />
+    <ProjectReference Include="..\Raccoon.Extensions.OpenTelemetry.Tests.Common\Raccoon.Extensions.OpenTelemetry.Tests.Common.csproj" />
   </ItemGroup>
 </Project>
