@@ -6,7 +6,7 @@ using Raccoon.Extensions.OpenTelemetry.Npgsql.Extensions;
 
 namespace Raccoon.Extensions.OpenTelemetry.Npgsql.Tests.Extensions;
 
-public class PostgresOpenTelemetryExtensionsTests : IDisposable
+public sealed class PostgresOpenTelemetryExtensionsTests : IDisposable
 {
     private const string NpgsqlSourceName = "Npgsql";
     private const string NonNpgsqlSourceName = "SomeOtherSource";
